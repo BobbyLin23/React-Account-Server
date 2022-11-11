@@ -5,6 +5,6 @@ export const userProviders = [
   {
     provide: 'USER_REPOSITORY',
     useFactory: (datasource: DataSource) => datasource.getRepository(User),
-    inject: ['DATA_RESOURCE'],
+    inject: ['DATA_SOURCE'],
   },
 ];

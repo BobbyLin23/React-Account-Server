@@ -9,7 +9,11 @@ export class UserService {
     private userRepository: Repository<User>,
   ) {}
 
-  async getUserByName(username: string) {
-    return await this.userRepository.findOne({ where: username });
+  async getUserByName(username: string): Promise<User> {
+    return this.userRepository.findOne({
+      where: {
+        username,
+      },
+    });
   }
 }
