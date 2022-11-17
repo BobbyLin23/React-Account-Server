@@ -12,7 +12,7 @@ export const databaseProviders = [
         password: '123456',
         database: 'post',
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-        synchronize: true,
+        synchronize: false,
       });
       return datasource.initialize();
     },
