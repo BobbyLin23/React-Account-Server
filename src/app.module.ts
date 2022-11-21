@@ -3,9 +3,10 @@ import { DatabaseModule } from './module/database/database.module';
 import { UserModule } from './module/user/user.module';
 import { AuthModule } from './module/auth/auth.module';
 import { BillModule } from './module/bill/bill.module';
+import { TypeModule } from './module/type/type.module';
 
 @Module({
-  imports: [UserModule, DatabaseModule, AuthModule, BillModule],
+  imports: [UserModule, DatabaseModule, AuthModule, BillModule, TypeModule],
   controllers: [],
   providers: [],
 })

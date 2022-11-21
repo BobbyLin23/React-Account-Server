@@ -113,4 +113,13 @@ export class UserController {
       },
     });
   }
+
+  @Get('captcha')
+  async getCaptcha(@Res() response: Response) {
+    const result = await this.userService.getImgCaptcha();
+    return response.send({
+      code: 200,
+      data: result,
+    });
+  }
 }

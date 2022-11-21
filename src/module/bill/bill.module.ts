@@ -3,7 +3,7 @@ import { AuthModule } from '../auth/auth.module';
 import { DatabaseModule } from '../database/database.module';
 import { BillController } from './bill.controller';
 import { BillService } from './bill.service';
-import { billProvider } from './user.providers';
+import { billProvider } from './bill.providers';
 
 @Module({
   imports: [AuthModule, DatabaseModule],

@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { createUserProps } from './interface';
 import { User } from './user.entity';
+import * as svgCaptcha from 'svg-captcha';
 
 @Injectable()
 export class UserService {
@@ -31,5 +32,21 @@ export class UserService {
     let user = await this.getUserByName(username);
     user.signature = signature;
     return await this.userRepository.save(user);
+  }
+
+  async getImgCaptcha() {
+    const svg = svgCaptcha.createMathExpr({
+      size: 4,
+      color: false,
+      noise: 1,
+      width: 100,
+      height: 50,
+    });
+    return {
+      img: `data:image/svg+xml;base64,${Buffer.from(svg.data).toString(
+        `base64`,
+      )}`,
+      data: svg.text,
+    };
   }
 }

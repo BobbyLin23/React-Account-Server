@@ -52,18 +52,18 @@ export class BillController {
   @Get('list')
   @UseGuards(JwtAuthGuard)
   async list(@Req() request: Request, @Res() response: Response) {
-    const { date, page = 1, page_size = 5, type_id = 'all' } = request.query;
+    const { date, page = 1, page_size = 5, type_id = 0 } = request.query;
     const token = request.headers.authorization;
     const decode = await this.authService.verifyToken(token);
     const list = await this.billService.getList(decode.sub);
     const _list = list.filter((item) => {
-      if (type_id !== 'all') {
+      if (Number(type_id) !== 0) {
         return (
-          moment(Number(item.date)).format('YYYY-MM') == date &&
+          moment(Number(item.date)).format('YYYY-MM') === date &&
           Number(type_id) == item.type_id
         );
       }
-      return moment(Number(item.date)).format('YYYY-MM') == date;
+      return moment(Number(item.date)).format('YYYY-MM') === date;
     });
     let listMap = _list
       .reduce((curr, item) => {
