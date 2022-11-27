@@ -20,11 +20,12 @@ export class UserService {
   }
 
   async addUser(params: createUserProps): Promise<User> {
-    let user = new User();
-    user.username = params.username;
-    user.password = params.password;
-    user.avatar = params.avatar;
-    user.signature = params.signature;
+    let user = this.userRepository.create({
+      username: params.username,
+      password: params.password,
+      avatar: params.avatar,
+      signature: params.signature,
+    });
     return await this.userRepository.save(user);
   }
 

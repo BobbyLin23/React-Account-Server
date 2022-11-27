@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+@Entity('types')
 export class Type {
   @PrimaryGeneratedColumn()
   id: number;
@@ -10,7 +10,4 @@ export class Type {
 
   @Column()
   type: number;
-
-  @Column()
-  user_id: number;
 }

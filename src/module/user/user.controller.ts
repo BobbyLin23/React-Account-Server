@@ -51,7 +51,7 @@ export class UserController {
       return response.send({
         code: 200,
         msg: 'Register Success',
-        data: null,
+        data: res,
       });
     } else {
       return response.send({

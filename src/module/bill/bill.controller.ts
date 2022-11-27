@@ -222,5 +222,72 @@ export class BillController {
 
   @Get('data')
   @UseGuards(JwtAuthGuard)
-  async data(@Req() request: Request, @Res() response: Response) {}
+  async data(@Req() request: Request, @Res() response: Response) {
+    const { date = '' } = request.query;
+    const token = request.headers.authorization;
+    const decode = await this.authService.verifyToken(token);
+
+    let user_id = decode.sub;
+    if (!date) {
+      return response.send({
+        code: 400,
+        msg: 'error',
+        data: null,
+      });
+    }
+    const result = await this.billService.getList(user_id);
+    const start =
+      moment(date as string)
+        .startOf('month')
+        .unix() * 1000;
+    const end =
+      moment(date as string)
+        .endOf('month')
+        .unix() * 1000;
+    const _data = result.filter((item) => {
+      if (Number(item.date) > start && Number(item.date) < end) {
+        return item;
+      }
+    });
+    const totalExpense = _data.reduce((arr, curr) => {
+      if (curr.pay_type === 1) {
+        arr += Number(curr.amount);
+      }
+      return arr;
+    }, 0);
+    const totalIncome = _data.reduce((arr, curr) => {
+      if (curr.pay_type === 2) {
+        arr += Number(curr.amount);
+      }
+      return arr;
+    }, 0);
+    let totalData = _data.reduce((arr, curr) => {
+      const index = arr.findIndex((item) => item.type_id === curr.type_id);
+      if (index === -1) {
+        arr.push({
+          type_id: curr.type_id,
+          type_name: curr.type_name,
+          pay_type: curr.pay_type,
+          number: Number(curr.amount),
+        });
+      }
+      if (index > -1) {
+        arr[index].number += Number(curr.amount);
+      }
+      return arr;
+    }, []);
+    totalData = totalData.map((item) => {
+      item.number = Number(Number(item.number).toFixed(2));
+      return item;
+    });
+    return response.send({
+      code: 200,
+      msg: 'success',
+      data: {
+        total_expense: Number(totalExpense).toFixed(2),
+        total_income: Number(totalIncome).toFixed(2),
+        total_data: totalData || {},
+      },
+    });
+  }
 }

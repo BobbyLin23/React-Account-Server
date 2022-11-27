@@ -6,11 +6,11 @@ export const databaseProviders = [
     useFactory: async () => {
       const datasource = new DataSource({
         type: 'mysql',
-        host: 'localhost',
-        port: 3306,
-        username: 'root',
-        password: '123456',
-        database: 'post',
+        host: process.env.MYSQLHOST,
+        port: Number(process.env.MYSQLPORT),
+        username: process.env.MYSQLUSER,
+        password: process.env.MYSQLPASSWORD,
+        database: process.env.MYSQLDATABASE,
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
         synchronize: false,
       });
