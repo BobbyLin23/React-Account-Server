@@ -250,13 +250,13 @@ export class BillController {
       }
     });
     const totalExpense = _data.reduce((arr, curr) => {
-      if (curr.pay_type === 1) {
+      if (Number(curr.pay_type) === 1) {
         arr += Number(curr.amount);
       }
       return arr;
     }, 0);
     const totalIncome = _data.reduce((arr, curr) => {
-      if (curr.pay_type === 2) {
+      if (Number(curr.pay_type) === 2) {
         arr += Number(curr.amount);
       }
       return arr;

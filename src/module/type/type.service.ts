@@ -10,8 +10,8 @@ export class TypeService {
   ) {}
 
   async getList(user_id: number) {
-    const QUERY_STR = 'id, name, type, user_id';
-    let sql = `select ${QUERY_STR} from type where user_id = 0 or user_id = ${user_id}`;
+    const QUERY_STR = 'id, name, type';
+    let sql = `select ${QUERY_STR} from types`;
     const result = await this.typeRepository.query(sql);
     return result;
   }

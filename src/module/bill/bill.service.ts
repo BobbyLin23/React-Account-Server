@@ -23,7 +23,7 @@ export class BillService {
 
   async getList(user_id: number): Promise<Bill[]> {
     const SQL_STR = 'id, pay_type, amount, date, type_id, type_name, remark';
-    const sql = `select ${SQL_STR} from bill where user_id = ${user_id}`;
+    const sql = `select ${SQL_STR} from bills where user_id = ${user_id}`;
     const result = await this.billRepository.query(sql);
     return result;
   }
